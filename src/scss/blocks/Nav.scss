@@ -1,0 +1,22 @@
+@charset 'utf-8';
+
+$navBtn-size: 35px;
+
+.navBtn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: $navBtn-size;
+    width: $navBtn-size;
+
+    &-bar {
+        display: inline-block;
+        background-color: var( --dark );
+        height: 2px;
+        width: 65%;
+        border-radius: 1px;
+        margin: 2px 0;
+    }
+}
+

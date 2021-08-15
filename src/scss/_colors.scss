@@ -1,0 +1,87 @@
+@charset "utf-8";
+
+$themes: (
+    light: (
+        'transparent': transparent,
+        'base': #FFFFFF,
+        'primary': #FF691F,
+        'success': #4CAF50,
+        'danger' : #F44336,
+        'warning': #FFC107,
+        'info': #00BCD4,
+        'dark': #505050,
+        'white': #FFF,
+        'shadow': #DDD,
+    ),
+    dark: (
+        'transparent': transparent,
+        'base': #333,
+        'primary': #FF691F,
+        'success': #4CAF50,
+        'danger' : #F44336,
+        'warning': #FFC107,
+        'info': #00BCD4,
+        'dark': #BBB,
+        'white': #FFF,
+        'shadow': #303030,
+    ),
+);
+
+@function colorVariation( $color ) {
+    @return (
+        '-darken3': darken( $color, 9% ),
+        '-darken2': darken( $color, 6% ),
+        '-darken1': darken( $color, 3% ),
+        '': $color,
+        '-lighten1': lighten( $color, 3% ),
+        '-lighten2': lighten( $color, 6% ),
+        '-lighten3': lighten( $color, 9% ),
+    );
+}
+
+@mixin root-theme( $colors ) {
+    :root {
+        @each $color-alias, $baseColor in $colors {
+            @each $color-brightness, $color in colorVariation( $baseColor ) {
+                --#{ $color-alias }#{ $color-brightness }: #{ $color };
+            }
+        }
+    }
+}
+
+@mixin theme-create( $colors ) {
+    @each $color-alias, $baseColor in $colors {
+        @each $color-brightness, $color in colorVariation( $baseColor ) {
+            .#{ $color-alias }#{ $color-brightness } {
+                background-color: $color;
+                &--text { color: $color; }
+                &--border {
+                    border: 1px solid $color;
+                    @each $direction-alias, $direction in $directions {
+                        &-#{ $direction } {
+                            border-#{ $direction }: 1px solid $color;
+                        }
+                    }
+                }
+                &--boxShadow { box-shadow: 2px 2px 5px $color; }
+                &--shadow { text-shadow: 2px 2px 5px $color; }
+            }
+        }
+    }
+}
+
+body#theme-light {
+    @include theme-create( map-get( $themes, 'light' ) );
+    @include root-theme( map-get( $themes, 'light' ) );
+}
+@include theme-create( map-get( $themes, 'light' ) );
+@include root-theme( map-get( $themes, 'light' ) );
+
+body#theme-dark {
+    @include theme-create( map-get( $themes, 'dark' ) );
+    @include root-theme( map-get( $themes, 'dark' ) );
+}
+@media ( prefers-color-scheme: dark ) {
+    @include theme-create( map-get( $themes, 'dark' ) );
+    @include root-theme( map-get( $themes, 'dark' ) );
+}
