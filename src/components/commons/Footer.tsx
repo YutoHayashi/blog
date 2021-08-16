@@ -11,7 +11,7 @@ const DefaultProps: Props = {};
  * @param { Props } _props
  * @returns { ReactElement }
  */
-export const Footer: React.FunctionComponent<Props> = ( _props: React.PropsWithChildren<Props>, ): ReactElement => {
+export const Footer: React.FunctionComponent<Partial<Props>> = ( _props: React.PropsWithChildren<Partial<Props>>, ): ReactElement => {
 
     const props: React.PropsWithChildren<Props> = { ...Object.assign( DefaultProps ), _props, };
 

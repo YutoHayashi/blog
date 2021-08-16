@@ -8,7 +8,7 @@ const DefaultProps: Props = {
     icon: '',
 };
 
-export const Mdi: React.FunctionComponent<Props> = ( _props: React.PropsWithChildren<Props> ): ReactElement => {
+export const Mdi: React.FunctionComponent<Partial<Props>> = ( _props: React.PropsWithChildren<Partial<Props>> ): ReactElement => {
 
     const props: React.PropsWithChildren<Props> = { ...Object.assign( DefaultProps ), ..._props, };
 

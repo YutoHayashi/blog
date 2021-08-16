@@ -65,6 +65,7 @@ export type File = Node & {
   birthtimeMs?: Maybe<Scalars['Float']>;
   blksize?: Maybe<Scalars['Int']>;
   blocks?: Maybe<Scalars['Int']>;
+  url?: Maybe<Scalars['String']>;
   /** Copy file to static directory and return public url to it */
   publicURL?: Maybe<Scalars['String']>;
   /** Returns all children nodes filtered by type ImageSharp */
@@ -254,8 +255,6 @@ export type DirectoryCtimeArgs = {
 export type Site = Node & {
   buildTime?: Maybe<Scalars['Date']>;
   siteMetadata?: Maybe<SiteSiteMetadata>;
-  port?: Maybe<Scalars['Int']>;
-  host?: Maybe<Scalars['String']>;
   polyfill?: Maybe<Scalars['Boolean']>;
   pathPrefix?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
@@ -1770,12 +1769,12 @@ export type WpPostToPostFormatConnection = {
 };
 
 /** The postFormat type */
-export type WpPostFormat = Node & WpNode & WpTermNode & WpUniformResourceIdentifiable & WpDatabaseIdentifier & WpMenuItemLinkable & {
+export type WpPostFormat = Node & WpNode & WpTermNode & WpUniformResourceIdentifiable & WpDatabaseIdentifier & {
   /** Connection between the postFormat type and the ContentNode type */
   contentNodes?: Maybe<WpPostFormatToContentNodeConnection>;
   /** The number of objects connected to the object */
   count?: Maybe<Scalars['Int']>;
-  /** The unique resource identifier path */
+  /** The unique identifier stored in the database */
   databaseId: Scalars['Int'];
   /** The description of the object */
   description?: Maybe<Scalars['String']>;
@@ -1999,8 +1998,7 @@ export type WpMenu = Node & WpNode & WpDatabaseIdentifier & {
 
 /** Registered menu locations */
 export type WpMenuLocationEnum =
-  | 'FOOTER'
-  | 'PRIMARY';
+  | 'EMPTY';
 
 /** Connection between the Menu type and the MenuItem type */
 export type WpMenuToMenuItemConnection = {
@@ -2172,10 +2170,10 @@ export type SitePluginPluginOptions = {
   jsxPragma?: Maybe<Scalars['String']>;
   allExtensions?: Maybe<Scalars['Boolean']>;
   fileName?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
-  verbose?: Maybe<Scalars['Boolean']>;
   aliases?: Maybe<SitePluginPluginOptionsAliases>;
   pathCheck?: Maybe<Scalars['Boolean']>;
+  url?: Maybe<Scalars['String']>;
+  verbose?: Maybe<Scalars['Boolean']>;
 };
 
 export type SitePluginPluginOptionsAliases = {
@@ -2344,6 +2342,7 @@ export type QueryFileArgs = {
   birthtimeMs?: Maybe<FloatQueryOperatorInput>;
   blksize?: Maybe<IntQueryOperatorInput>;
   blocks?: Maybe<IntQueryOperatorInput>;
+  url?: Maybe<StringQueryOperatorInput>;
   publicURL?: Maybe<StringQueryOperatorInput>;
   childrenImageSharp?: Maybe<ImageSharpFilterListInput>;
   childImageSharp?: Maybe<ImageSharpFilterInput>;
@@ -2414,8 +2413,6 @@ export type QueryAllDirectoryArgs = {
 export type QuerySiteArgs = {
   buildTime?: Maybe<DateQueryOperatorInput>;
   siteMetadata?: Maybe<SiteSiteMetadataFilterInput>;
-  port?: Maybe<IntQueryOperatorInput>;
-  host?: Maybe<StringQueryOperatorInput>;
   polyfill?: Maybe<BooleanQueryOperatorInput>;
   pathPrefix?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
@@ -3376,6 +3373,7 @@ export type FileFieldsEnum =
   | 'birthtimeMs'
   | 'blksize'
   | 'blocks'
+  | 'url'
   | 'publicURL'
   | 'childrenImageSharp'
   | 'childrenImageSharp___fixed___base64'
@@ -3648,6 +3646,7 @@ export type FileFilterInput = {
   birthtimeMs?: Maybe<FloatQueryOperatorInput>;
   blksize?: Maybe<IntQueryOperatorInput>;
   blocks?: Maybe<IntQueryOperatorInput>;
+  url?: Maybe<StringQueryOperatorInput>;
   publicURL?: Maybe<StringQueryOperatorInput>;
   childrenImageSharp?: Maybe<ImageSharpFilterListInput>;
   childImageSharp?: Maybe<ImageSharpFilterInput>;
@@ -3944,8 +3943,6 @@ export type SiteFieldsEnum =
   | 'siteMetadata___description'
   | 'siteMetadata___author'
   | 'siteMetadata___siteUrl'
-  | 'port'
-  | 'host'
   | 'polyfill'
   | 'pathPrefix'
   | 'id'
@@ -4047,8 +4044,6 @@ export type SiteGroupConnection = {
 export type SiteFilterInput = {
   buildTime?: Maybe<DateQueryOperatorInput>;
   siteMetadata?: Maybe<SiteSiteMetadataFilterInput>;
-  port?: Maybe<IntQueryOperatorInput>;
-  host?: Maybe<StringQueryOperatorInput>;
   polyfill?: Maybe<BooleanQueryOperatorInput>;
   pathPrefix?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
@@ -4269,10 +4264,10 @@ export type SitePluginPluginOptionsFilterInput = {
   jsxPragma?: Maybe<StringQueryOperatorInput>;
   allExtensions?: Maybe<BooleanQueryOperatorInput>;
   fileName?: Maybe<StringQueryOperatorInput>;
-  url?: Maybe<StringQueryOperatorInput>;
-  verbose?: Maybe<BooleanQueryOperatorInput>;
   aliases?: Maybe<SitePluginPluginOptionsAliasesFilterInput>;
   pathCheck?: Maybe<BooleanQueryOperatorInput>;
+  url?: Maybe<StringQueryOperatorInput>;
+  verbose?: Maybe<BooleanQueryOperatorInput>;
 };
 
 export type SitePluginPluginOptionsAliasesFilterInput = {
@@ -4520,10 +4515,10 @@ export type SitePageFieldsEnum =
   | 'pluginCreator___pluginOptions___jsxPragma'
   | 'pluginCreator___pluginOptions___allExtensions'
   | 'pluginCreator___pluginOptions___fileName'
-  | 'pluginCreator___pluginOptions___url'
-  | 'pluginCreator___pluginOptions___verbose'
   | 'pluginCreator___pluginOptions___aliases____'
   | 'pluginCreator___pluginOptions___pathCheck'
+  | 'pluginCreator___pluginOptions___url'
+  | 'pluginCreator___pluginOptions___verbose'
   | 'pluginCreator___nodeAPIs'
   | 'pluginCreator___browserAPIs'
   | 'pluginCreator___ssrAPIs'
@@ -7211,6 +7206,7 @@ export type WpMediaItemFieldsEnum =
   | 'remoteFile___birthtimeMs'
   | 'remoteFile___blksize'
   | 'remoteFile___blocks'
+  | 'remoteFile___url'
   | 'remoteFile___publicURL'
   | 'remoteFile___childrenImageSharp'
   | 'remoteFile___childrenImageSharp___fixed___base64'
@@ -7376,6 +7372,7 @@ export type WpMediaItemFieldsEnum =
   | 'localFile___birthtimeMs'
   | 'localFile___blksize'
   | 'localFile___blocks'
+  | 'localFile___url'
   | 'localFile___publicURL'
   | 'localFile___childrenImageSharp'
   | 'localFile___childrenImageSharp___fixed___base64'
@@ -7946,6 +7943,7 @@ export type WpPageFieldsEnum =
   | 'featuredImage___node___remoteFile___birthtimeMs'
   | 'featuredImage___node___remoteFile___blksize'
   | 'featuredImage___node___remoteFile___blocks'
+  | 'featuredImage___node___remoteFile___url'
   | 'featuredImage___node___remoteFile___publicURL'
   | 'featuredImage___node___remoteFile___childrenImageSharp'
   | 'featuredImage___node___remoteFile___id'
@@ -7983,6 +7981,7 @@ export type WpPageFieldsEnum =
   | 'featuredImage___node___localFile___birthtimeMs'
   | 'featuredImage___node___localFile___blksize'
   | 'featuredImage___node___localFile___blocks'
+  | 'featuredImage___node___localFile___url'
   | 'featuredImage___node___localFile___publicURL'
   | 'featuredImage___node___localFile___childrenImageSharp'
   | 'featuredImage___node___localFile___id'
@@ -8510,6 +8509,7 @@ export type WpPostFieldsEnum =
   | 'featuredImage___node___remoteFile___birthtimeMs'
   | 'featuredImage___node___remoteFile___blksize'
   | 'featuredImage___node___remoteFile___blocks'
+  | 'featuredImage___node___remoteFile___url'
   | 'featuredImage___node___remoteFile___publicURL'
   | 'featuredImage___node___remoteFile___childrenImageSharp'
   | 'featuredImage___node___remoteFile___id'
@@ -8547,6 +8547,7 @@ export type WpPostFieldsEnum =
   | 'featuredImage___node___localFile___birthtimeMs'
   | 'featuredImage___node___localFile___blksize'
   | 'featuredImage___node___localFile___blocks'
+  | 'featuredImage___node___localFile___url'
   | 'featuredImage___node___localFile___publicURL'
   | 'featuredImage___node___localFile___childrenImageSharp'
   | 'featuredImage___node___localFile___id'
@@ -11081,10 +11082,10 @@ export type SitePluginFieldsEnum =
   | 'pluginOptions___jsxPragma'
   | 'pluginOptions___allExtensions'
   | 'pluginOptions___fileName'
-  | 'pluginOptions___url'
-  | 'pluginOptions___verbose'
   | 'pluginOptions___aliases____'
   | 'pluginOptions___pathCheck'
+  | 'pluginOptions___url'
+  | 'pluginOptions___verbose'
   | 'nodeAPIs'
   | 'browserAPIs'
   | 'ssrAPIs'

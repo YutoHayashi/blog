@@ -35,10 +35,10 @@ const setApp = ( context: Partial<AppContext>, ): void => _setApp( { ..._app, ..
 
 /**
  * ページの基本構成コンポーネント
- * @param { Props } _props
+ * @param { React.PropsWithChildren<Partial<Props>> } _props
  * @returns { ReactElement }
  */
-export const Default: React.FunctionComponent<Props> = ( _props: React.PropsWithChildren<Props> ): ReactElement => {
+export const Default: React.FunctionComponent<Partial<Props>> = ( _props: React.PropsWithChildren<Partial<Props>> ): ReactElement => {
 
     [ _app, _setApp, ] = useState<AppContext>( {
         ...DefaultApp,
@@ -63,7 +63,9 @@ export const Default: React.FunctionComponent<Props> = ( _props: React.PropsWith
     return (
         <App.Provider value={ _app }>
             <Header></Header>
-            { props.children.content }
+            <main>
+                { props.children.content }
+            </main>
             <Footer></Footer>
         </App.Provider>
     );

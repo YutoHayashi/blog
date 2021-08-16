@@ -5,7 +5,7 @@ interface Props {}
 
 const DefaultProps: Props = {};
 
-export const NavBtn: React.FunctionComponent<Props> = ( _props: React.PropsWithChildren<Props>, ): ReactElement => {
+export const NavBtn: React.FunctionComponent<Partial<Props>> = ( _props: React.PropsWithChildren<Partial<Props>>, ): ReactElement => {
 
     const props: React.PropsWithChildren<Props> = { ...Object.assign( DefaultProps ), ..._props, };
 

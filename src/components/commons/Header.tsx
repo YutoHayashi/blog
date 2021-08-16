@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { useEffect, ReactElement } from 'react';
 import { Link } from 'gatsby';
 import { App } from '@/contexts/App';
 import { NavBtn } from './NavBtn';
@@ -14,19 +14,19 @@ const DefaultProps: Props = {};
  * @param { Props } _props
  * @returns { ReactElement }
  */
-export const Header: React.FunctionComponent<Props> = ( _props: React.PropsWithChildren<Props>, ): ReactElement => {
+export const Header: React.FunctionComponent<Partial<Props>> = ( _props: React.PropsWithChildren<Partial<Props>>, ): ReactElement => {
 
     const props: React.PropsWithChildren<Props> = { ...Object.assign( DefaultProps ), _props, };
 
     return (
         <App.Consumer>
             { ( { taxonomy, }, ) => (
-                <header id={ `${ taxonomy }-header` } className={ `flex flex-direction-row transparent dark--text pt-4 pb-4 pr-4 pl-4` }>
+                <header id={ `${ taxonomy }-header` } className={ `flex flex-direction-row transparent dark--text pt-4 pb-4 pr-4 pl-4 header w-100` }>
                     {/* Navigation btn */}
                         <NavBtn />
                     {/* -------------- */}
                     {/* h1 */}
-                        <Link to={ `/` } className={ `mr-auto` }>
+                        <Link to={ `/` } className={ `mr-auto white--text` }>
                             <h1>Y.H.</h1>
                         </Link>
                     {/* -- */}
